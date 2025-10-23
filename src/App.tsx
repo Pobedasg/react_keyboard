@@ -1,38 +1,44 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
 
-type KeyLoggerState = {
-  lastPressedKey: string | null;
+type KeyState = {
+  key: string | null;
 };
 
-export class App extends Component<{}, KeyLoggerState> {
-  state: KeyLoggerState = {
-    lastPressedKey: null,
+export class App extends Component<{}, KeyState> {
+  state: KeyState = {
+    key: null,
   };
 
-  handleKeyUp = (event: KeyboardEvent) => {
-    this.setState({ lastPressedKey: event.key });
-    console.log(event.key);
+  handleUp = (e: KeyboardEvent) => {
+    this.setState({ key: e.key });
   };
 
   componentDidMount() {
-    document.addEventListener('keyup', this.handleKeyUp as any);
+    document.addEventListener('keyup', this.handleUp);
   }
 
   componentWillUnmount() {
-    document.removeEventListener('keyup', this.handleKeyUp as any);
+    document.removeEventListener('keyup', this.handleUp);
   }
 
   render() {
-    const { lastPressedKey } = this.state;
-    const message =
-      lastPressedKey === null
-        ? 'Nothing was pressed yet'
-        : `The last pressed key is [${lastPressedKey}]`;
+    const { key } = this.state;
+
+    const containerClass = classNames('KeyLog');
+
+    const msgClass = classNames('KeyLog__msg', {
+      'KeyLog__msg--empty': key === null,
+      'KeyLog__msg--set': key !== null,
+    });
 
     return (
-      <div className={classNames('key-logger')}>
-        <p>{message}</p>
+      <div className={containerClass}>
+        {key === null ? (
+          <p className={msgClass}>Nothing was pressed yet</p>
+        ) : (
+          <p className={msgClass}>The last pressed key is [{key}]</p>
+        )}
       </div>
     );
   }
