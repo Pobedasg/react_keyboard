@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
 
-type KeyState = {
+type PressedKey = {
   key: string | null;
 };
 
-export class App extends Component<{}, KeyState> {
-  state: KeyState = {
+export class App extends Component<{}, PressedKey> {
+  state: PressedKey = {
     key: null,
   };
 
