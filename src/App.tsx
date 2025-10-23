@@ -25,11 +25,11 @@ export class App extends Component<{}, KeyState> {
   render() {
     const { key } = this.state;
 
-    const containerClass = classNames('KeyLog');
+    const containerClass = classNames('App');
 
-    const msgClass = classNames('KeyLog__msg', {
-      'KeyLog__msg--empty': key === null,
-      'KeyLog__msg--set': key !== null,
+    const msgClass = classNames('App__message', {
+      'App__message--empty': key === null,
+      'App__message--set': key !== null,
     });
 
     return (
