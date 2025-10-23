@@ -2,16 +2,18 @@ import React, { Component } from 'react';
 import classNames from 'classnames';
 
 type PressedKey = {
-  key: string | null;
+  pressedKey: string | null;
 };
 
 export class App extends Component<{}, PressedKey> {
   state: PressedKey = {
-    key: null,
+    pressedKey: null,
   };
 
-  handleUp = (e: KeyboardEvent) => {
-    this.setState({ key: e.key });
+  handleUp = (e: Event) => {
+    const ev = e as KeyboardEvent;
+
+    this.setState({ pressedKey: ev.key });
   };
 
   componentDidMount() {
@@ -23,21 +25,21 @@ export class App extends Component<{}, PressedKey> {
   }
 
   render() {
-    const { key } = this.state;
+    const { pressedKey } = this.state;
 
     const containerClass = classNames('App');
 
     const msgClass = classNames('App__message', {
-      'App__message--empty': key === null,
-      'App__message--set': key !== null,
+      'App__message--empty': pressedKey === null,
+      'App__message--set': pressedKey !== null,
     });
 
     return (
       <div className={containerClass}>
-        {key === null ? (
+        {pressedKey === null ? (
           <p className={msgClass}>Nothing was pressed yet</p>
         ) : (
-          <p className={msgClass}>The last pressed key is [{key}]</p>
+          <p className={msgClass}>The last pressed key is [{pressedKey}]</p>
         )}
       </div>
     );
